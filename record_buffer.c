@@ -60,7 +60,7 @@ char *record() {
                                   &val, &dir);
 
   /* Set period size to 32 frames. */
-  frames = 32;
+  frames = 320;
   snd_pcm_hw_params_set_period_size_near(handle,
                               params, &frames, &dir);
 
@@ -82,7 +82,7 @@ char *record() {
   /* We want to loop for 5 seconds */
   snd_pcm_hw_params_get_period_time(params,
                                          &val, &dir);
-  loops = 5000000 / val;
+  loops = 50000000 / val;
 
   while (loops > 0) {
     loops--;
@@ -106,9 +106,10 @@ char *record() {
 
   snd_pcm_drain(handle);
   snd_pcm_close(handle);
-  free(buffer);
   
+  return_buffer=(char *) malloc(size);
   strcpy(return_buffer, buffer);
+  free(buffer);
   
   return return_buffer;
 }
@@ -118,7 +119,8 @@ int main(){
  //Trying to record the sound with the listing 4 (record function) and saving 
  //the sound buffer in a temporary buffer. 
 
-  char * buffer;
+  char * buffer=(char *) malloc(2048);
+  
   strcpy(buffer, record());
   if (buffer != NULL){
       printf("Got Buffer!\n");}

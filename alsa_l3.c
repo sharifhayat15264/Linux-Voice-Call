@@ -51,7 +51,7 @@ int main() {
   snd_pcm_hw_params_set_rate_near(handle, params, &val, &dir);
 
   /* Set period size to 32 frames. */
-  frames = 32;
+  frames = 320;
   snd_pcm_hw_params_set_period_size_near(handle, params, &frames, &dir);
 
   /* Write the parameters to the driver */
@@ -70,7 +70,7 @@ int main() {
   snd_pcm_hw_params_get_period_time(params, &val, &dir);
   /* 5 seconds in microseconds divided by
    * period time */
-  loops = 5000000 / val;
+  loops = 50000000 / val;
 
   while (loops > 0) {
     loops--;
